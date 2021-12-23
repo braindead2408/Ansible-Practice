@@ -1,0 +1,37 @@
+---
+- name: user configuration
+  hosts:
+    - servera.lab.example.com
+    - serverb.lab.example.com
+    - serverc.lab.example.com
+  vars:
+    users:
+      uname: virat
+      uid: 3134
+      home: /home/virat
+ 
+    pkg:
+      name: httpd
+      state: present
+      service: httpd
+      enabled: true
+      svc_state: started
+  tasks:
+    - name: create the users
+      user:
+        name: "{{ users.uname }}"
+        uid: "{{ users.uid }}"
+        home: "{{ users.home }}"
+        state: present
+ 
+    - name: install the package
+      yum:
+        name: "{{ pkg.name }}"
+        state: "{{ pkg.state }}"
+ 
+    - name: start the pkg service
+      service:
+        name: "{{ pkg.service }}"
+        state: "{{ pkg.svc_state }}"
+        enabled: "{{ pkg.enabled }}"
+                                                                                                                                   1,1           
